@@ -31,7 +31,7 @@
  *     debut year
  *       2006
  *
- * Use "$artists" as the variable name ($artists = array(Van Halen']=> ...)
+ * Use "$artists" as the variable name ($artists = array(...)
  */
 
 $artists = array(
@@ -79,7 +79,8 @@ print '2. Van Halen debut year: ';
 print $artists['Van Halen']['debut year'];
 print '<br/><br/>';
 
-/** 3.  Using a "foreach" loop(s), print out a list of all artists, each on a separate  line. 
+/** 3.  Using a "foreach" loop(s), print out a list of all artists, each on a separate 
+ *      line. Challenge: do it on a single line (additional php function required).
  */
 
 print '3. All artists:<br/>';
@@ -89,8 +90,13 @@ foreach($artists as $artist_name => $artist_data) {
 }
 print '<br/><br/>';
 
+print '3(challenge). All artists:<br/>';
+print implode('<br/>', array_keys($artists));
+print '<br/><br/>';
+
 /** 4.  Repeat the previous example, but print out as a comma separated list using the
- *  PHP "implode" function. 
+ *  PHP "implode" function. Challenge: do it in a single line of code (additional php 
+ *  function required).
  */
 
 print '4. All artists (comma-separated):<br/>';
@@ -99,6 +105,10 @@ foreach($artists as $artist_name => $artist_data) {
   $names[] = $artist_name;
 }
 print implode(', ', $names);
+print '<br/><br/>';
+
+print '4(challenge). All artists (comma-separated):<br/>';
+print implode(', ', array_keys($artists));
 print '<br/><br/>';
 
 /** 5.  Using a "foreach" loop(s) and if-statements, print out names of artists that 
@@ -125,7 +135,7 @@ foreach($artists as $artist_name => $artist_data) {
 }
 print '<br/><br/>';
 
-/** 7.  Add two more artists (and relevant data) to the $music array. Do not go back 
+/** 7.  Add two more artists (and relevant data) to the $artists array. Do not go back 
  *  and modify the original array.
  */
 
@@ -154,9 +164,15 @@ print_r($artists);
 print '</pre>';
 
 /** 8.  Create a function called "get_artists_names" for the code of step 6 above, 
- *  taking the "$artist" array as the argument, and retuning a text string as the result.
+ *  taking the "$artists" array as the argument, and retuning a text string as the result.
  *  Call the function from a "print" statement. 
  */
+ 
+
+ 
+ 
+ 
+ 
 
 function get_artists_names($artists) {
   $output = '';
@@ -171,7 +187,7 @@ print '8. Updated artists names and debut year: <br/>';
 print get_artists_names($artists);
 print '<br/><br/>';
 
-/** 9.  Create a function called "get_artists_stats" that takes the $artist array and
+/** 9.  Create a function called "get_artists_stats" that takes the $artists array and
  *  returns the number of albums and the number of artists as an array. Call the function
  *  and output its results from one or more "print" statements. 
  */
@@ -197,19 +213,22 @@ print '<br/><br/>';
 /** 10.  Create a function called "add_artist" that takes two arguments. The first is
  *  the $artists array (passed by reference) and the second is a $new_artists array. The
  *  function will add the contents of the $new_artists array to the existing $artists 
- *  array. Add a new artist using this function the call the functions from steps 8
+ *  array only if the artist doesn't already exist in the $artists array. 
+ *  Add a new artist using this function then call the functions from steps 8
  *  and 9 above to see the updated stats. 
  */
 
 function add_artist(&$artists, $new_artists) {
   foreach($new_artists as $new_artist_name => $new_artist_data) {
-    $artists[$new_artist_name] = $new_artist_data;
+    if (!array_key_exists($new_artist_name, $artists)) {
+      $artists[$new_artist_name] = $new_artist_data;
+    }
   }
 }
 
 $new_artist['Train'] = array(
   'albums' => array(
-    'Need to lookup a train album'=> array(
+    'Bulletproof Picasso'=> array(
       'genre' => 'rock',
     ),
   ),
@@ -219,6 +238,8 @@ $new_artist['Train'] = array(
 add_artist($artists, $new_artist);
 $artists_stats = get_artists_stats($artists);
 print '10. Added artist, updated stats: <br/>';
+print get_artists_names($artists);
+print '<br/>';
 print 'Number of artists: ' . $artists_stats['num_artists'];
 print '<br/>';
 print 'Number of albums: ' . $artists_stats['num_albums'];
