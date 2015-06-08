@@ -235,6 +235,15 @@ $new_artist['Train'] = array(
   'debut year' => 2000,
 );
 
+$new_artist['Van Halen'] = array(
+  'albums' => array(
+    '5150'=> array(
+      'genre' => 'rock',
+    ),
+  ),
+  'debut year' => 2000,
+);
+
 add_artist($artists, $new_artist);
 $artists_stats = get_artists_stats($artists);
 print '10. Added artist, updated stats: <br/>';
